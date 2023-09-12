@@ -274,8 +274,11 @@ h6 {
 #hero {
   width: 100%;
   height: 100vh;
-  background: url("../img/hero-bg.jpg") top right no-repeat;
-  background-size: cover;
+  /* background: url("../img/bg.jpg") top right no-repeat;
+  background-size: cover; */
+  background-color: #89d4cf;
+  background-image: linear-gradient(315deg, #89d4cf 0%, #6e45e1 74%);
+
   position: relative;
 }
 
