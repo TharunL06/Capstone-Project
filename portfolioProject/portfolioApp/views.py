@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 # user is default database provided by django where we store the data
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 def index(request):
@@ -18,6 +19,19 @@ def blog(request):
     return render(request,"blog.html")
 
 def handlelogin(request):
+    if request.method=="POST":
+        email=request.POST.get('email')
+        pass1=request.POST.get('pass1')
+        user=authenticate(username=email,password=pass1)
+        if user is not None:
+            login(request,user)
+            messages.success(request,"Login sucessful")
+            return redirect('/')
+        else :
+            messages.error(request,"Invalid credentials, Try again")
+            return redirect('/login')
+
+
     return render(request,"login.html")
 
 def signup(request):
@@ -26,7 +40,7 @@ def signup(request):
         fname=request.POST.get('fname')
         lname=request.POST.get('lname')
         email=request.POST.get('email')
-        pass1=request.POST.get('pass2')
+        pass1=request.POST.get('pass1')
         pass2=request.POST.get('pass2')
         # validate password and confirm password
         if pass2!=pass1:
@@ -61,3 +75,8 @@ def signup(request):
 
 
     return render(request,"signup.html")
+
+def handlelogout(request):
+    logout(request)
+    messages.info(request,"Logout succesful")
+    return redirect('/login')

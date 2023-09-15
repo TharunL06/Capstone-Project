@@ -1,0 +1,55 @@
+step 1 :
+
+        INSTALL ALLAUTH
+
+        *pip install all-allauth
+
+step 2: In settings.py file add below configuration
+
+        INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'django.contrib,sites', # added new for google account
+        'portfolioApp',
+        'allauth',
+        'allauth.account',
+        'allauth.socialaccount',
+        'allauth.socialaccount.provider.google',
+        ]
+
+step 3: Added anywhere in setting.py file
+
+        AUTHENTICATION_BACKENDS = (
+            'django.contrib.auth.backends.ModelBackend',
+            'allauth.account.auth_backends.AuthenticationBackend'
+        )
+
+step 4: This is for where we fetch the API
+
+        SOCIALACCOUNT_PROVIDERS={
+            'google':{
+                'scope':[
+                    'profile',
+                    'email'
+                ],
+                'AUTH_PARAMS':{
+                    'access_type':'online',
+                }
+            }
+        }
+
+step 5 : Go to file where want to implement (login or signup)
+
+        In that specific file load this {% load socialaccount %}
+
+step 6 : Added urls account in project urls.py
+
+        path('account/',include('allauth.urls')),
+
+step 7 : Ran the migrate command below
+        
+        python manage.py runserver
