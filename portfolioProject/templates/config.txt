@@ -53,3 +53,9 @@ step 6 : Added urls account in project urls.py
 step 7 : Ran the migrate command below
         
         python manage.py runserver
+
+admin :
+
+username : Tharun
+email : tharun@gmail.com
+pass : tharun123

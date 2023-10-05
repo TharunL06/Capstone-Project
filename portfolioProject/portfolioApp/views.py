@@ -4,6 +4,7 @@ from django.contrib import messages
 # user is default database provided by django where we store the data
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
+from .models import Blog
 
 # Create your views here.
 def index(request):
@@ -16,7 +17,10 @@ def contact(request):
     return render(request,"contact.html")
 
 def blog(request):
-    return render(request,"blog.html")
+    data=Blog.objects.all()
+    # print(data)
+    context={"data":data}
+    return render(request,"blog.html",context)
 
 def handlelogin(request):
     if request.method=="POST":
