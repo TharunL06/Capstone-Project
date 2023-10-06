@@ -4,16 +4,34 @@ from django.contrib import messages
 # user is default database provided by django where we store the data
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
-from .models import Blog
+from .models import Blog, Contact, Skill
 
 # Create your views here.
 def index(request):
-    return render(request,"index.html")
+    data=Skill.objects.all()
+    context={"data":data}
+    return render(request,"index.html",context)
 
 def about(request):
     return render(request,"about.html")
 
 def contact(request):
+    if not request.user.is_authenticated:
+        messages.info(request,"Please Login to contact us")
+        return render(request,"login.html")
+    if request.method=="POST":
+        name=request.POST['name']
+        email=request.POST['email']
+        phone=request.POST['num']
+        desc=request.POST['desc']
+        if len(phone)>10 or len(phone)<10:
+            messages.warning(request,"Please enter the 10 digit number")
+            return redirect("/contact")
+        query=Contact(name=name,email=email,phone=phone,description=desc)
+        query.save()
+        messages.success(request,"Thanks for contacting us, we will get back you soon")
+        return redirect("/contact")
+        
     return render(request,"contact.html")
 
 def blog(request):

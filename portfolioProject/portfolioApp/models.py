@@ -12,3 +12,22 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Contact(models.Model):
+    name=models.CharField(max_length=200)
+    email=models.EmailField()
+    phone=models.CharField(max_length=12)
+    description=models.TextField(max_length=200)
+
+    def __str__(self):
+        return self.name
+    
+class Skill(models.Model):
+    skill=models.CharField(max_length=150)
+    experience=models.IntegerField()
+
+    def __str__(self):
+        return self.skill
+    
+    
